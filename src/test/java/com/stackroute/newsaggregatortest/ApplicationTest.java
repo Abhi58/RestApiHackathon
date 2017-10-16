@@ -1,4 +1,4 @@
-/*package com.stackroute.newsaggregatortest;
+package com.stackroute.Useraggregatortest;
 
 
 import junit.framework.TestCase;
@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.hackathon.Application;
-import com.stackroute.hackathon.domain.News;
+import com.stackroute.hackathon.domain.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -26,11 +26,11 @@ public class ApplicationTest  extends TestCase {
 	private int port;
 	TestRestTemplate restTemplate = new TestRestTemplate();
 	HttpHeaders headers = new HttpHeaders();
-	News News;    
+	User User;    
     
 	@Before
     public void setUp() throws Exception {
-		News = new News(16,"DarkKnight");
+		User = new User(1,"abhi28@gmail.com","abhijit");
     }
 	
     private String createURLWithPort(String uri) {
@@ -42,40 +42,40 @@ public class ApplicationTest  extends TestCase {
     }
     
     @Test
-    public void testSaveNews() throws Exception { 
+    public void testSaveUser() throws Exception { 
 
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<News> entity = new HttpEntity<News>(News, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/SavedHeadlines?name=TheHindu"),
+                createURLWithPort("/Users/user"),
                 HttpMethod.POST, entity, String.class); 
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals("Headlines Saved",actual);
+        assertEquals("User profile Saved",actual);
     }
     
     @Test
     public void testList() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/SavedHeadlines"),
+                createURLWithPort("/Users"),
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response);
     }
     
     @Test
-    public void testGetNews() throws Exception {
+    public void testGetUser() throws Exception {
     }
     
     @Test
-    public void testUpdateNews() throws Exception {
+    public void testUpdateUser() throws Exception {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<News> entity = new HttpEntity<News>(News, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/SavedHeadlines/3?name=something"),
+                createURLWithPort("/Users/1?name=abhijit&email=abhi28@gmail.com"),
                 HttpMethod.PUT, entity, String.class); 
         assertNotNull(response);
         String actual = response.getBody();
@@ -84,17 +84,17 @@ public class ApplicationTest  extends TestCase {
     }
     
     @Test
-    public void testDeleteNews() throws Exception {
+    public void testDeleteUser() throws Exception {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<News> entity = new HttpEntity<News>(News, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/SavedHeadlines/77"),
+                createURLWithPort("/Users/delete/1"),
                 HttpMethod.DELETE, entity, String.class); 
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals("Headlines Deleted",actual);
+        assertEquals("User Deleted",actual);
     }
     
-}*/
+}
