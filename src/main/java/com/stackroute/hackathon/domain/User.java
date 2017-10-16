@@ -13,12 +13,19 @@ public class User {
     @Column(name="id")
     private int id;
 
-    @Column(name="username")
+    @Column(name="username",nullable=false)
     private String username;
 
-	@Column(name="emailId")
+	@Column(name="emailId",nullable=false)
     private String emailId;
 	
+//	public User(int id, String username, String emailId) {
+//		super();
+//		this.id = id;
+//		this.username = username;
+//		this.emailId = emailId;
+//	}
+
 	public int getId() {
 		return id;
 	}

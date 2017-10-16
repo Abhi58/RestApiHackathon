@@ -1,4 +1,4 @@
-package com.stackroute.Useraggregatortest;
+package com.stackroute.Usertest;
 
 
 import junit.framework.TestCase;
@@ -26,11 +26,14 @@ public class ApplicationTest  extends TestCase {
 	private int port;
 	TestRestTemplate restTemplate = new TestRestTemplate();
 	HttpHeaders headers = new HttpHeaders();
-	User User;    
+	User user;    
     
 	@Before
     public void setUp() throws Exception {
-		User = new User(1,"abhi28@gmail.com","abhijit");
+		user = new User();
+		user.setId(1);
+		user.setEmailId("abhi28@gmail.com");
+		user.setUsername("abhijit");
     }
 	
     private String createURLWithPort(String uri) {
@@ -39,6 +42,7 @@ public class ApplicationTest  extends TestCase {
     
     @After
     public void tearDown() throws Exception {
+    	user=null;
     }
     
     @Test
@@ -46,14 +50,14 @@ public class ApplicationTest  extends TestCase {
 
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(user, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/Users/user"),
                 HttpMethod.POST, entity, String.class); 
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals("User profile Saved",actual);
+        assertEquals("User Profile Saved",actual);
     }
     
     @Test
@@ -73,7 +77,7 @@ public class ApplicationTest  extends TestCase {
     public void testUpdateUser() throws Exception {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(user, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/Users/1?name=abhijit&email=abhi28@gmail.com"),
                 HttpMethod.PUT, entity, String.class); 
@@ -85,9 +89,10 @@ public class ApplicationTest  extends TestCase {
     
     @Test
     public void testDeleteUser() throws Exception {
+    	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> entity = new HttpEntity<User>(User, headers); 
+        HttpEntity<User> entity = new HttpEntity<User>(user, headers); 
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/Users/delete/1"),
                 HttpMethod.DELETE, entity, String.class); 

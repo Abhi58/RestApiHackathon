@@ -35,12 +35,12 @@ public class UserController {
 		
 		try {
 			User user=userService.getById(id);
-			return new ResponseEntity<User>(user, HttpStatus.FOUND);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 		catch(Exception e){
 			
 			User user=null;
-			return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<User>(user, HttpStatus.PARTIAL_CONTENT);
 		}
 	}
 	
@@ -61,11 +61,11 @@ public class UserController {
 	{
 		   try{
 	            userService.addUser(user);
-	        return new ResponseEntity<String>("User Profile Saved", HttpStatus.CREATED);
+	        return new ResponseEntity<String>("User Profile Saved", HttpStatus.OK);
 	        }
 	        catch(Exception e) {
 	            String User="User Details Not Found";
-	            return new ResponseEntity<String>(User, HttpStatus.NO_CONTENT);
+	            return new ResponseEntity<String>(User, HttpStatus.PARTIAL_CONTENT);
 	        }
     }
 	
@@ -74,24 +74,24 @@ public class UserController {
 		
 		  try {
 	            userService.deleteUser(id);
-	            return new ResponseEntity<String>("User Deleted", HttpStatus.GONE);
+	            return new ResponseEntity<String>("User Deleted", HttpStatus.OK);
 	        } 
 	        catch(Exception e) {
 	            String user="Unable to Delete User";
-	            return new ResponseEntity<String>(user, HttpStatus.RESET_CONTENT);
+	            return new ResponseEntity<String>(user, HttpStatus.OK);
 	        }
 	}
 	
 	@PutMapping("/Users/{id}")
 	public @ResponseBody ResponseEntity<String> updateHeadlines (@PathVariable("id") int id,@RequestParam String name,@RequestParam String email) {
-		try {
+//		try {
 	        userService.updateUser(id, name,email);
-	        return new ResponseEntity<String>("Updated", HttpStatus.ACCEPTED);
-	        }
-	        catch(Exception e) {
-	            String user="User Not Found";
-	            return new ResponseEntity<String>(user, HttpStatus.NOT_IMPLEMENTED);
-	        }
+	        return new ResponseEntity<String>("Updated", HttpStatus.OK);
+//	        }
+//	        catch(Exception e) {
+//	            String user="User Not Found";
+//	            return new ResponseEntity<String>(user, HttpStatus.NOT_IMPLEMENTED);
+//	        }
 		
 	}
 	
