@@ -1,4 +1,5 @@
-/*package com.stackroute.newsaggregator.configuration;
+package com.stackroute.hackathon.configuration;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,34 +19,25 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.stackroute.newsaggregator.controllers"))
-                .paths(PathSelectors.regex("/SavedHeadlines.*"))
+                .apis(RequestHandlerSelectors.basePackage("com.stackroute.hackathon.controllers"))
+                .paths(PathSelectors.regex("/Users.*"))
                 .build()
                 .apiInfo(metaData());
              
     }
     
     
-    public Docket loginApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.stackroute.newsaggregator.controllers"))
-                .paths(PathSelectors.regex("/Login.*"))
-                .build()
-                .apiInfo(metaData());
-             
-    }
+  
     
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
                 "Spring Boot REST API",
-                "Spring Boot REST API for NewsPack News Aggregator",
+                "Spring Boot REST API for User Details Spring Application",
                 "1.0",
                 "Terms of service",
-                new Contact("Abhijith Bharadwaj", "", ""),
+                new Contact("Abhijith Bharadwaj & Sankho Roy", "urlNotFound", "abhi.bharadwaj@abc.com"),
                "Apache License Version 2.0",
                 "https://www.apache.org/licenses/LICENSE-2.0");
         return apiInfo;
     }
 }
-*/

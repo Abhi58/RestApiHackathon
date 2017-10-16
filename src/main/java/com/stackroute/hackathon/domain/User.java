@@ -18,6 +18,7 @@ public class User {
 
 	@Column(name="emailId")
     private String emailId;
+	
 	public int getId() {
 		return id;
 	}

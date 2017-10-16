@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserServiceInterface {
 	@Override
 	public User addUser(User user) {
 		// TODO Auto-generated method stub
-		User user1=new User();
-		return userRepository.save(user1);
+		//User user1=new User();
+		return userRepository.save(user);
 		
 	}
 

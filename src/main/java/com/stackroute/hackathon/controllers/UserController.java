@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stackroute.hackathon.domain.User;
 import com.stackroute.hackathon.services.UserServiceImpl;
 
+import io.swagger.annotations.Api;
+
 
 
 
 
 @RestController
+@Api(value="User Details", description="Operations Pertaining to User information")
 public class UserController {
 	
 	@Autowired
