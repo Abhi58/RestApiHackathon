@@ -84,14 +84,14 @@ public class UserController {
 	
 	@PutMapping("/Users/{id}")
 	public @ResponseBody ResponseEntity<String> updateHeadlines (@PathVariable("id") int id,@RequestParam String name,@RequestParam String email) {
-//		try {
+		try {
 	        userService.updateUser(id, name,email);
 	        return new ResponseEntity<String>("Updated", HttpStatus.OK);
-//	        }
-//	        catch(Exception e) {
-//	            String user="User Not Found";
-//	            return new ResponseEntity<String>(user, HttpStatus.NOT_IMPLEMENTED);
-//	        }
+	        }
+	        catch(Exception e) {
+	            String user="User Not Found";
+	            return new ResponseEntity<String>(user, HttpStatus.NOT_IMPLEMENTED);
+	        }
 		
 	}
 	
