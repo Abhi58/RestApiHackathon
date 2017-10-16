@@ -2,8 +2,6 @@ package com.stackroute.Usertest;
 
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.hackathon.Application;
 import com.stackroute.hackathon.domain.User;
 
@@ -56,7 +53,7 @@ public class ApplicationTest  extends TestCase {
                 HttpMethod.POST, entity, String.class);
         assertNotNull(response);
         String actual = response.getBody();
-        System.out.println(actual);
+
         assertEquals("User Profile Saved",actual);
     }
     
@@ -83,8 +80,8 @@ public class ApplicationTest  extends TestCase {
                 HttpMethod.PUT, entity, String.class);
         assertNotNull(response);
         String actual = response.getBody();
-        System.out.println(actual);
-        assertEquals("Updated",actual);
+
+        assertEquals("User Updated Successfully",actual);
     }
     
    @Test
@@ -98,7 +95,7 @@ public class ApplicationTest  extends TestCase {
                 HttpMethod.DELETE, entity, String.class);
         assertNotNull(response);
         String actual = response.getBody();
-        System.out.println(actual);
+//        System.out.println(actual);
         assertEquals("User Deleted",actual);
     }
     

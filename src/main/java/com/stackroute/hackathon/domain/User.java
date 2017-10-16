@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class User {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name="id",nullable=false)
     private int id;
 
     @Column(name="username",nullable=false)
@@ -19,12 +19,6 @@ public class User {
 	@Column(name="emailId",nullable=false)
     private String emailId;
 	
-//	public User(int id, String username, String emailId) {
-//		super();
-//		this.id = id;
-//		this.username = username;
-//		this.emailId = emailId;
-//	}
 
 	public int getId() {
 		return id;

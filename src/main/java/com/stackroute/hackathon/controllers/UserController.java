@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 
 
 
-
+//<----Controller Class---->
 @RestController
 @Api(value="User Details", description="Operations Pertaining to User information")
 public class UserController {
@@ -29,8 +29,9 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 	
+	//<---Methods to Fetch Details of User using service -->
 	@GetMapping(path="/Users/{id}")
-	public @ResponseBody ResponseEntity<User> getbyid (@PathVariable("id") int id) {  
+	public @ResponseBody ResponseEntity<?> getbyid (@PathVariable("id") int id) {  
 
 		
 		try {
@@ -39,57 +40,60 @@ public class UserController {
 		}
 		catch(Exception e){
 			
-			User user=null;
-			return new ResponseEntity<User>(user, HttpStatus.PARTIAL_CONTENT);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NO_CONTENT);
 		}
 	}
 	
 	@GetMapping(path="/Users")
-	public @ResponseBody Iterable<User> getAllUsers() {
-		// This returns a JSON or XML with the News
-		 try {
-		        Iterable<User> allUsers = userService.getAllUsers();
-		        return allUsers;
-		        }
-		        catch(Exception e) {
-		            return null;
-		        }
-	}
-	
-	@PostMapping(path="/Users/user", consumes="application/json") // Map ONLY POST Requests
-	public @ResponseBody ResponseEntity<String> insertHeadlines (@RequestBody User user)
-	{
-		   try{
-	            userService.addUser(user);
-	        return new ResponseEntity<String>("User Profile Saved", HttpStatus.OK);
-	        }
-	        catch(Exception e) {
-	            String User="User Details Not Found";
-	            return new ResponseEntity<String>(User, HttpStatus.PARTIAL_CONTENT);
-	        }
+	   public @ResponseBody ResponseEntity<?> getAllUsers() { 
+        try {
+            return new ResponseEntity<Iterable<User>>(userService.getAllUsers(), HttpStatus.OK);
+        }
+        catch(Exception e) { 
+            return  new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 	
+	//<--- Method to create a new user using service ---->
+	@PostMapping(path="/Users/user", consumes="application/json") // Map ONLY POST Requests
+	public @ResponseBody ResponseEntity<?> insertUser(@RequestBody User user)
+	{
+        try {
+            if(user.getEmailId() == null || user.getUsername() == null) return new ResponseEntity<String>("Enter valid name and email Id", HttpStatus.BAD_REQUEST);
+            userService.addUser(user);
+            return new ResponseEntity<String>("User Profile Saved", HttpStatus.OK);
+        }
+        catch(Exception e) { 
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+	
+	//<--- Method to delete a user using service -->
 	@DeleteMapping("/Users/delete/{id}")
-	public @ResponseBody ResponseEntity<String> deleteHeadlines (@PathVariable("id") int id) {
+	public @ResponseBody ResponseEntity<String> removeUser (@PathVariable("id") int id) {
 		
 		  try {
 	            userService.deleteUser(id);
 	            return new ResponseEntity<String>("User Deleted", HttpStatus.OK);
 	        } 
 	        catch(Exception e) {
-	            String user="Unable to Delete User";
+	            String user=e.getMessage();
 	            return new ResponseEntity<String>(user, HttpStatus.OK);
 	        }
 	}
 	
+	
+	//<--- Method to update user details using service --->
 	@PutMapping("/Users/{id}")
 	public @ResponseBody ResponseEntity<String> updateHeadlines (@PathVariable("id") int id,@RequestParam String name,@RequestParam String email) {
 		try {
-	        userService.updateUser(id, name,email);
-	        return new ResponseEntity<String>("Updated", HttpStatus.OK);
+			User user=userService.getById(id);
+			if(user.getEmailId() == null || user.getUsername() == null) return new ResponseEntity<String>("Enter valid name and email Id", HttpStatus.BAD_REQUEST);
+	        return new ResponseEntity<String>(userService.updateUser(id, name,email), HttpStatus.OK);
 	        }
 	        catch(Exception e) {
-	            String user="User Not Found";
+	            String user=e.getMessage();
 	            return new ResponseEntity<String>(user, HttpStatus.NOT_IMPLEMENTED);
 	        }
 		
